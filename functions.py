@@ -16,7 +16,7 @@ def vertical(l):
     return newl
 
 
-class NEURALNETWORK():
+class NeuralNetwork():
     def __init__(self):
         # Creating a seed makes it generate the same random numbers each time.
         random.seed(1)
@@ -64,7 +64,7 @@ class NEURALNETWORK():
 
 ''' SAMPLE CODE
     #Initialise a single neuron neural network.
-    neuralNetwork = NEURALNETWORK()
+    neuralNetwork = NeuralNetwork()
     print("Random starting synaptic weights: " + str(neuralNetwork.synapticWeights))
     
     #Training sets.
