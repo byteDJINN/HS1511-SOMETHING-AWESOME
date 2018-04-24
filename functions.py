@@ -1,29 +1,28 @@
-#My first attempt at a neural network
-#Created by Djimon Jayasundera
-#Idea and inspiration from Milo Spencer-Harper
-#20/3/2018
-#Using Python 3
+# Contains all of the functions needed to make the main file.
+# Created by Djimon Jayasundera
+# Created: 20/3/2018
+# Using Python 3
 
 import random, math, sys, os
-for x in ["D:", "E:", "F:", "G:"]:
-    try:
-        sys.path.insert(1, x + "/My Modules/")
-        
-    except:
-        pass
-import usefulStuff
 
-
-
+def vertical(l):
+    '''l is a list of lists.'''
+    if len(l[0]) < 2:
+        return False
+    newl = [['' for y in range(len(l))] for x in range(len(l))]
+    for x in range(len(l)):
+        for y in range(len(l[x])):
+            newl[x][y].append(l[x][y])
+    return newl
 
 
 class NEURALNETWORK():
     def __init__(self):
-        #Creating a seed makes it generate the same random numbers each time.
+        # Creating a seed makes it generate the same random numbers each time.
         random.seed(1)
-        #Models a single neuron with 3 inputs and 1 output.
-        #It is in a 3x1 matrix with values from the range of -1 to 1
-        #and an average of 0.
+        # Models a single neuron with 3 inputs and 1 output.
+        # It is in a 3x1 matrix with values from the range of -1 to 1
+        # and an average of 0.
         self.synapticWeights = 2 * random.choice((3, 1)) - 1
 
     def sigmoid(self, value):
@@ -42,18 +41,18 @@ class NEURALNETWORK():
 
     def train(self, trainingSetInputs, trainingSetOutputs, numberOfIterations):
         for iteration in range(numberOfIterations):
-            #Pass the training set through the neural network (a single neuron).
+            # Pass the training set through the neural network (a single neuron).
             output = self.think(trainingSetInputs)
 
-            #Calculate the error.
+            # Calculate the error.
             error = trainingSetOutputs - output
 
-            #Multiply error by input and again by gradient of Sigmoid curve.
-            #Less confident weights are adjusted more.
-            #Inputs, which are zero, do not cause changes to the weights.
+            # Multiply error by input and again by gradient of Sigmoid curve.
+            # Less confident weights are adjusted more.
+            # Inputs, which are zero, do not cause changes to the weights.
             adjustment = numpy.dot(trainingSetInputs.T, error * self.sigmoidDerivative(output))
 
-            #Adjust weights.
+            # Adjust weights.
             self.synapticWeights += adjustment
 
     def think(self, inputs):
@@ -63,7 +62,7 @@ class NEURALNETWORK():
         return self.sigmoid(dot(inputs, self.synapticWeights))
     
 
-if __name__ == "__main__":
+''' SAMPLE CODE
     #Initialise a single neuron neural network.
     neuralNetwork = NEURALNETWORK()
     print("Random starting synaptic weights: " + str(neuralNetwork.synapticWeights))
@@ -78,6 +77,4 @@ if __name__ == "__main__":
     neuralNetwork.train(trainingSetInputs, trainingSetOutputs, 10000)
 
     print("New synaptic weights after training: " + neuralNetwork.synapticWeights)
-
-
-    
+'''
