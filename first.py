@@ -45,7 +45,9 @@ class NeuralNetwork():
             output = self.think(trainingSetInputs)
 
             # Calculate the error.
-            error = trainingSetOutputs - output
+            error = []
+            for i in range(len(trainingSetOutputs)):
+                error.append(trainingSetOutputs[i] - output[i])
 
             # Multiply error by input and again by gradient of Sigmoid curve.
             # Less confident weights are adjusted more.
