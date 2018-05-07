@@ -19,7 +19,14 @@ def setVars():
   pieces['black']['pawn'] = '♟'
   
   # Create the board
-  global board = [['' for x in range(8)] for y in range(8)]
+  global board = [['.' for x in range(8)] for y in range(8)]
+
+def showBoard():
+  global board
+  for x in range(8):
+    for y in range(8):
+      print(str(x),"|",board[x][y])
+  print(" | abcdefgh")
   
 
 # MAIN
