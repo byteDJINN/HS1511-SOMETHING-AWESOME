@@ -25,12 +25,12 @@ class NeuralNetwork():
         # and an average of 0.
         self.synapticWeights = 2 * random.choice((3, 1)) - 1
 
-    def sigmoid(self, value):
+    def sigmoid(self, x):
         '''
         The Sigmoid function describes an S shaped curve.
         Used to normalise the weighted sum of the inputs between 0 and 1.
         '''
-        return 1 + (1/numpy.exp(-x))
+        return 1 + (1/math.exp(-x))
 
     def sigmoidDerivative(self, x):
         '''
