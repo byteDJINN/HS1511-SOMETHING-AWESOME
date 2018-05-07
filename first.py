@@ -52,16 +52,26 @@ class NeuralNetwork():
             # Multiply error by input and again by gradient of Sigmoid curve.
             # Less confident weights are adjusted more.
             # Inputs, which are zero, do not cause changes to the weights.
-            adjustment = numpy.dot(trainingSetInputs.T, error * self.sigmoidDerivative(output))
+            adjustment = []
+            for i in range(len(trainingSetInputs)):
+                adjustment.append(vertical(trainingSetInputs)[i]*error[i]*self.sigmoidDerivative(output[i]))
+            
+            #adjustment = numpy.dot(trainingSetInputs.T, error * self.sigmoidDerivative(output))
 
             # Adjust weights.
-            self.synapticWeights += adjustment
+            for i in range(len(self.synapticWeights)):
+                self.synapticWeights[i] += adjustment[i]
+            #self.synapticWeights += adjustment
 
     def think(self, inputs):
         '''
         Pass inputs through the Neural Network (the single neuron).
         '''
-        return self.sigmoid(dot(inputs, self.synapticWeights))
+        output = []
+        for i in range(len(inputs)):
+            output.append(self.sigmoid(inputs[i] * self.synapticWeights[i]))
+        return output
+        #return self.sigmoid(dot(inputs, self.synapticWeights))
     
 
 ''' SAMPLE CODE
