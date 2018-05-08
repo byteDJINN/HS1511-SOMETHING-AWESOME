@@ -68,6 +68,9 @@ def showBoard():
     print(c+"\u200A",end="") # NOTE: Close but not 100% accurate
   print()
   
+def getRating(board):
+  # Generate number based on how good each side is
+  
 
 # MAIN
 setVars()
