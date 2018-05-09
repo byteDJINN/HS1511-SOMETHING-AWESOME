@@ -134,7 +134,7 @@ def isValidXMove(start, finish, distance=-1, obstructions=True): # Move along x-
     isValid = (abs(start[0] - finish[0]) == distance and abs(start[1] - finish[1]) == 0)
   
 
-def isValidYMove(start, finish, distance=-1, forceForward=False): # Nove along y-axis
+def isValidYMove(start, finish, distance=-1, forceForward=False): # Move along y-axis
   if forceForward:
     return (start[0] - finish[0] == 0 and start[1] - finish[1] == -distance) # Since pawns can only go forward
   elif distance == -1:
@@ -150,6 +150,7 @@ def isValidZMove(start, finish, distance=-1): # Move along diagonal.
 
 def isObstruction(start, finish):
   pass
+  # Options: vector arithmetic - HARD
   
 # MAIN
 
