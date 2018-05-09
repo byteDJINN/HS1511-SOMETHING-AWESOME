@@ -81,12 +81,13 @@ def showBoard():
   print()
   print("  |",end="")
   for c in 'abcdefgh':
-    print(c+"\u200A",end="") # NOTE: Close but not 100% accurate
+    print(c+"\u200A",end="") # Note: Close but not 100% accurate
   print()
 
 def movePiece(start, finish): # start and finish are [x, y] of piece to be moved
-  if isValidPos(start) and isValid(finish):
-    pass
+  if isValidPos(start) and isValidPos(finish) and isValidMove(board[start[0]][start[1]], start, finish):
+    
+    return True
   else:
     return False
   
@@ -148,9 +149,8 @@ def isValidZMove(start, finish, distance=-1): # Move along diagonal.
   else:
     return (abs(start[0] - finish[0]) == abs(start[1] - finish[1]) == distance)
 
-def isObstruction(start, finish):
-  pass
-  # Options: vector arithmetic - HARD
+def isObstruction(start, finish): # FINISH THIS!!!
+  return False
   
 # MAIN
 
