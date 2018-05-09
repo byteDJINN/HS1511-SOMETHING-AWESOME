@@ -5,8 +5,9 @@
 # FUNCTIONS
 
 def setVars():
+  
   # Create dictionary of pieces.
-
+  print("SPONTANEOUSLY CREATING PIECES...")
   global pieces
   pieces = {'white': {}, 'black': {}}
   pieces['white']['king'] = '♔'
@@ -23,6 +24,8 @@ def setVars():
   pieces['black']['pawn'] = '♟'
 
   # Create shorthand
+  print("GIVING PIECES SHORT NAMES...")
+  global w1,w2,w3,w4,w5,w6,b1,b2,b3,b4,b5,b6
   w1 = pieces['white']['king']
   w2 = pieces['white']['queen']
   w3 = pieces['white']['rook']
@@ -38,10 +41,12 @@ def setVars():
   b6 = pieces['black']['pawn']
 
   # Create the board
+  print("SPONTANEOUSLY CREATING A BOARD...")
   global board
   board = [['\u2001' for x in range(8)] for y in range(8)]
   
-  # Put on white pieces
+  # Set up white pieces
+  print("SETTING UP WHITE PIECES...")
   y = 0
   for piece in [w3, w5, w4, w2, w1, w4, w5, w3]: # Non-Pawns
     board[0][y] = piece
@@ -49,13 +54,21 @@ def setVars():
   for y in range(8): # Pawns
     board[1][y] = w6
     
-  # Put on black pieces
+  # Set up black pieces
+  print("SETTING UP BLACK PIECES...")
   y = 0
   for piece in [b3, b5, b4, b2, b1, b4, b5, b3]: # Non-Pawns
     board[7][y] = piece
     y += 1
   for y in range(8): # Pawns
     board[6][y] = b6
+  
+  # Create game information
+  print("WRITING DOWN GAME INFORMATION...")
+  turnNumber = 0
+  
+  # Done
+  print("STARTING THE GAME...")
   
 
 def showBoard():
@@ -108,16 +121,23 @@ def isValidMove(piece, start, finish):
   elif piece == w5 or piece == b5:
     pass # PUT STUFF HERE
   elif piece == w6 or piece == b6:
-    pass # PUT STUFF HERE
+    if start[1] == 1 and isValidYMove(start, finish, 2, forceForward=True): # If it is the first turn
+      return True
+    elif isValidYMove(start, finish, 1, forceForward=True):
+      return True
+    # Add elif it goes diagonally
 
-def isValidXMove(start, finish, distance=-1): # Move along x-axis.
+def isValidXMove(start, finish, distance=-1, obstructions=True): # Move along x-axis.
   if distance == -1:
-    return (abs(start[1] - finish[1]) == 0)
+    isValid = (abs(start[1] - finish[1]) == 0)
   else:
-    return (abs(start[0] - finish[0]) == distance and abs(start[1] - finish[1]) == 0)
+    isValid = (abs(start[0] - finish[0]) == distance and abs(start[1] - finish[1]) == 0)
+  
 
-def isValidYMove(start, finish, distance=-1): # Nove along y-axis.
-  if distance == -1:
+def isValidYMove(start, finish, distance=-1, forceForward=False): # Nove along y-axis
+  if forceForward:
+    return (start[0] - finish[0] == 0 and start[1] - finish[1] == -distance) # Since pawns can only go forward
+  elif distance == -1:
     return (abs(start[0] - finish[0]) == 0)
   else:
     return (abs(start[0] - finish[0]) == 0 and abs(start[1] - finish[1]) == distance)
@@ -128,6 +148,9 @@ def isValidZMove(start, finish, distance=-1): # Move along diagonal.
   else:
     return (abs(start[0] - finish[0]) == abs(start[1] - finish[1]) == distance)
 
+def isObstruction(start, finish):
+  pass
+  
 # MAIN
 
 setVars()
