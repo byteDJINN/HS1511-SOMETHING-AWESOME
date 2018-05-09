@@ -67,10 +67,15 @@ def showBoard():
   for c in 'abcdefgh':
     print(c+"\u200A",end="") # NOTE: Close but not 100% accurate
   print()
+
+def movePiece(start, finish): # start and finish are [x, y] of piece to be moved
+  
+  
   
 def getRating(board):
   # Generate number based on how good each side is
-  
+
+
 
 # MAIN
 setVars()
