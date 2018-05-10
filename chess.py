@@ -5,9 +5,7 @@
 # FUNCTIONS
 
 def setVars():
-  
   # Create dictionary of pieces.
-  print("SPONTANEOUSLY CREATING PIECES...")
   global pieces
   pieces = {'white': {}, 'black': {}}
   pieces['white']['king'] = '♔'
@@ -24,7 +22,6 @@ def setVars():
   pieces['black']['pawn'] = '♟'
 
   # Create shorthand
-  print("GIVING PIECES SHORT NAMES...")
   global w1,w2,w3,w4,w5,w6,b1,b2,b3,b4,b5,b6
   w1 = pieces['white']['king']
   w2 = pieces['white']['queen']
@@ -41,12 +38,10 @@ def setVars():
   b6 = pieces['black']['pawn']
 
   # Create the board
-  print("SPONTANEOUSLY CREATING A BOARD...")
   global board
   board = [['\u2001' for x in range(8)] for y in range(8)]
   
   # Set up white pieces
-  print("SETTING UP WHITE PIECES...")
   y = 0
   for piece in [w3, w5, w4, w2, w1, w4, w5, w3]: # Non-Pawns
     board[0][y] = piece
@@ -55,7 +50,6 @@ def setVars():
     board[1][y] = w6
     
   # Set up black pieces
-  print("SETTING UP BLACK PIECES...")
   y = 0
   for piece in [b3, b5, b4, b2, b1, b4, b5, b3]: # Non-Pawns
     board[7][y] = piece
@@ -64,11 +58,7 @@ def setVars():
     board[6][y] = b6
   
   # Create game information
-  print("WRITING DOWN GAME INFORMATION...")
   turnNumber = 0
-  
-  # Done
-  print("STARTING THE GAME...")
   
 
 def showBoard():
@@ -90,10 +80,6 @@ def movePiece(start, finish): # start and finish are [x, y] of piece to be moved
     return True
   else:
     return False
-  
-def getRating(board):
-  # Generate number based on how good each side is
-
 
 def isValidPos(cords): # cords is a list of [x, y]
   return cords[0]>-1 and cords[0] < 8 and cords[1]>-1 and cords[1]<8
@@ -149,10 +135,11 @@ def isValidZMove(start, finish, distance=-1): # Move along diagonal.
   else:
     return (abs(start[0] - finish[0]) == abs(start[1] - finish[1]) == distance)
 
-def isObstruction(start, finish): # FINISH THIS!!!
-  return False
-  
-# MAIN
+def isObstruction(start, finish): 
+  # Unfinished
+  pass
 
-setVars()
-showBoard()
+def getBoard(): # Returns the board matrix
+  global board
+  return board
+
