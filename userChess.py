@@ -20,3 +20,6 @@ def movePiece(start, finish):
     print("You successfully moved.")
   else:
     print("Your move was invalid.")
+
+def getTurnNumber():
+  return c.turnNumber
