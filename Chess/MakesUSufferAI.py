@@ -1,5 +1,5 @@
 # IMPORTS
-import userChess.py
+import userChess
 
 # FUNCTIONS
 
