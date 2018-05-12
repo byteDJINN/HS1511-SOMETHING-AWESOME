@@ -61,8 +61,7 @@ def setVars():
   turnNumber = 0
   
 
-def showBoard():
-  global board
+def showBoard(board):
   for x in range(8):
     print()
     print(str(x+1),'|',end='')
@@ -77,45 +76,52 @@ def showBoard():
     print(c+"\u200A",end="") # Note: Close but not 100% accurate
   print()
 
-def movePiece(start, finish): # start and finish are [x, y] of piece to be moved
-  if isValidPos(start) and isValidPos(finish) and isValidMove(board[start[0]][start[1]], start, finish):
-    
-    return True
-  else:
-    return False
+def movePiece(board, start, finish): # start and finish are [x, y] of piece to be moved
+  return board
+
+
+def isValid(board, start, finish):
+  return isValidPos(start) and isValidPos(finish) and isValidMove(board, board[start[0]][start[1]], start, finish)
+
 
 def isValidPos(cords): # cords is a list of [x, y]
   return cords[0]>-1 and cords[0] < 8 and cords[1]>-1 and cords[1]<8
 
-def isValidMove(piece, start, finish):
-  global board # Get the board
+def isValidMove(board, piece, start, finish):
   if piece != w5 and board[finish[0], finish[1]] == 0 and isObstruction(start, finish): # Check for obstructions
     return False  
   elif start == finish:
     return False
-  elif piece == w1 or piece == b1:
+  elif piece == w1 or piece == b1: # King
     if isValidXMove(start, finish, distance=1) or isValidYMove(start, finish, distance=1) or isValidZMove(start, finish, distance=1):
       return True
     else:
       return False
-  elif piece == w2 or piece == b2:
+  elif piece == w2 or piece == b2: # Queen
     if isValidXMove(start, finish) or isValidYMove(start, finish) or isValidZMove(start, finish):
       return True
     else:
       return False
-  elif piece == w3 or piece == b3:
+  elif piece == w3 or piece == b3: # Rook
     if isValidXMove(start, finish) or isValidYMove(start, finish):
       return True
     else:
       return False
-  elif piece == w4 or piece == b4:
+  elif piece == w4 or piece == b4: # Bishop
     if isValidZMove(start, finish):
       return True
     else:
       return False
-  elif piece == w5 or piece == b5:
-    pass # PUT STUFF HERE
-  elif piece == w6 or piece == b6:
+  elif piece == w5 or piece == b5: # Knight
+    xDiff = abs(start[0]-finish[0])
+    yDiff = abs(start[1]-finish[1])
+    if xDiff == 1 and yDiff == 2:
+      return True
+    elif xDiff == 2 and yDiff == 1:
+      return True
+    else:
+      return False
+  elif piece == w6 or piece == b6: # Pawn
     if start[1] == 1 and isValidYMove(start, finish, 2, forceForward=True): # If it is the first time the piece is being moved
       return True
     elif isValidYMove(start, finish, 1, forceForward=True):

@@ -12,14 +12,11 @@ def getBoard():
   '''
   return c.getBoard()
   
-def isValidMove(piece, start, finish):
-  return c.isValidMove(piece, start, finish)
+def isValid(board, start, finish):
+  return c.isValid(board, start, finish)
   
-def movePiece(start, finish):
-  if c.movePiece:
-    print("You successfully moved.")
-  else:
-    print("Your move was invalid.")
+def movePiece(board, start, finish):
+  return c.movePiece(board, start, finish)
 
 def getTurnNumber():
   return c.turnNumber
