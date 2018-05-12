@@ -1,17 +1,21 @@
+import userChess as u
+import random as r
+# Set up white and black
+if r.randint(0, 1):
+  import makesUSufferAi as ai1
+  import opponentAi as ai2
+else:
+  import makesUSufferAi as ai2
+  import opponentAi as ai1
 
-''' PSUEDO CODE
-import ai1, ai2
-import userChess
-
-while (game not over):
-  if getTurnNumber() % 2 == 1: # If it is an odd number
+while not u.isGameOver(u.getBoard):
+  if u.getTurnNumber() % 2 == 1: # If it is an odd number
     ai1.decideMove()
   else:
     ai2.decideMove()
-  
-  if (game over):
-    win = whoever won
 
-print(win, "WON!!!")
-
-'''
+wKing, bKing = u.isGameOver(u.getBoard())
+if wKing:
+  print("White Won!!!")
+else:
+  print("Black Won!!!")

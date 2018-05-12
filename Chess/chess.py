@@ -76,7 +76,24 @@ def showBoard(board):
     print(c+"\u200A",end="") # Note: Close but not 100% accurate
   print()
 
+def isGameOver(board):
+  wKing = False
+  bKing = False
+  for row in board:
+    for square in row:
+      if square == w1:
+        wKing = True
+      elif square == b1:
+        bKing = True
+  if not wKing and bKing:
+    return [wKing, bKing]
+  return False
+
 def movePiece(board, start, finish): # start and finish are [x, y] of piece to be moved
+  if not isValid(board, start, finish):
+    return False
+  board[finish[0], finish[1]] = board[start[0], start[1]]
+  board[start[0], start[1]] = 0
   return board
 
 

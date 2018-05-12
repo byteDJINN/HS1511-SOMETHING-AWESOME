@@ -1,6 +1,8 @@
 '''
 This is the file that the user is allowed to import when they make their own AI. To avoid violation of abstraction the user will not
 use any functions from the chess.py file, and to easily avoid this they will only use the functions listed here.
+
+NOTE: For simplification, to win you must take the opponents king.
 '''
 
 import chess as c
@@ -20,3 +22,7 @@ def movePiece(board, start, finish):
 
 def getTurnNumber():
   return c.turnNumber
+
+def isGameOver(board):
+  return c.isGameOver(board)
+    
