@@ -1,3 +1,4 @@
+import sys
 import userChess as u
 import random as r
 # Set up white and black
@@ -10,9 +11,9 @@ else:
 
 while not u.isGameOver(u.getBoard):
   if u.getTurnNumber() % 2 == 1: # If it is an odd number
-    ai1.decideMove()
+    setBoard(ai1.decideMove())
   else:
-    ai2.decideMove()
+    setBoard(ai2.decideMove())
 
 wKing, bKing = u.isGameOver(u.getBoard())
 if wKing:

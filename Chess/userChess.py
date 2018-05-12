@@ -6,6 +6,7 @@ NOTE: For simplification, to win you must take the opponents king.
 '''
 
 import chess as c
+import sys
 
 def getBoard():
   '''
@@ -26,3 +27,10 @@ def getTurnNumber():
 def isGameOver(board):
   return c.isGameOver(board)
     
+def setBoard(board):
+  '''
+  AI is not allowed to use this function.
+  '''
+  assert(sys.argv[0][len(sys.argv[0])-12::] == "userChess.py") # SECURITY
+  c.board = board
+
