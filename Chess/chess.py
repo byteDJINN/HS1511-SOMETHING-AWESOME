@@ -120,7 +120,10 @@ def isValidMove(piece, start, finish):
       return True
     elif isValidYMove(start, finish, 1, forceForward=True):
       return True
-    # Add elif it goes diagonally
+    elif isValidZMove(start, finish, distance=1, forceForward=True):
+      return True
+    else:
+      return False
 
 def isValidXMove(start, finish, distance=-1, obstructions=True): # Move along x-axis.
   if distance == -1:
@@ -129,16 +132,22 @@ def isValidXMove(start, finish, distance=-1, obstructions=True): # Move along x-
     isValid = (abs(start[0] - finish[0]) == distance and abs(start[1] - finish[1]) == 0)
 
 def isValidYMove(start, finish, distance=-1, forceForward=False): # Move along y-axis
-  if forceForward:
+  if forceForward and distance != -1:
     return (start[0] - finish[0] == 0 and start[1] - finish[1] == -distance) # Since pawns can only go forward
+  elif forceForward:
+    return (start[0] - finish[0] == 0 and start[1] - finish[1])
   elif distance == -1:
     return (abs(start[0] - finish[0]) == 0)
   else:
     return (abs(start[0] - finish[0]) == 0 and abs(start[1] - finish[1]) == distance)
 
-def isValidZMove(start, finish, distance=-1): # Move along diagonal.
-  if distance == -1:
-    return  (abs(start[0] - finish[0]) == abs(start[1] - finish[1]))
+def isValidZMove(start, finish, distance=-1, forceForward=False): # Move along diagonal.
+  if forceForward and distance != -1:
+    return (abs(start[0] - finish[0]) == finish[1] - start[1] == distance)
+  elif forceForward:
+    return (abs(start[0] - finish[0]) == finish[1] - start[1])
+  elif distance == -1:
+    return (abs(start[0] - finish[0]) == abs(start[1] - finish[1]))
   else:
     return (abs(start[0] - finish[0]) == abs(start[1] - finish[1]) == distance)
 
