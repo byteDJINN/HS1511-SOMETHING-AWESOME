@@ -94,7 +94,7 @@ def movePiece(board, start, finish): # start and finish are [x, y] of piece to b
   if not isValid(board, start, finish):
     return False
   board[finish[0]][finish[1]] = board[start[0]][start[1]]
-  board[start[0]][start[1]] = 0
+  board[start[0]][start[1]] = 0 # Reset square
   return board
 
 
