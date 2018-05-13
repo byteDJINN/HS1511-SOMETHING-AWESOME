@@ -18,8 +18,12 @@ def getBoard():
 def isValid(board, start, finish):
   return c.isValid(board, start, finish)
   
-def movePiece(board, start, finish):
-  return c.movePiece(board, start, finish)
+def movePiece(start, finish):
+  assert(sys.argv[0][len(sys.argv[0])-12::] == "\\runChess.py") # SECURITY
+  if c.movePiece(getBoard(), start, finish):
+    setBoard(c.movePiece(getBoard(), start, finish))
+  else:
+    print("Invalid move!")
 
 def getTurnNumber():
   return c.turnNumber
@@ -31,6 +35,10 @@ def setBoard(board):
   '''
   AI is not allowed to use this function.
   '''
-  assert(sys.argv[0][len(sys.argv[0])-12::] == "/runChess.py") # SECURITY
+  assert(sys.argv[0][len(sys.argv[0])-12::] == "\\runChess.py") # SECURITY
   c.board = board
+
+def showBoard(board):
+  c.showBoard(board)
+
 
