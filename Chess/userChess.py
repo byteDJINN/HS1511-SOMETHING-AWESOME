@@ -31,6 +31,6 @@ def setBoard(board):
   '''
   AI is not allowed to use this function.
   '''
-  assert(sys.argv[0][len(sys.argv[0])-12::] == "userChess.py") # SECURITY
+  assert(sys.argv[0][len(sys.argv[0])-12::] == "/runChess.py") # SECURITY
   c.board = board
 
