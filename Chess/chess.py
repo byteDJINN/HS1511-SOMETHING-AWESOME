@@ -58,7 +58,8 @@ def setVars():
     board[6][y] = b6
   
   # Create game information
-  turnNumber = 0
+  global turnNumber
+  turnNumber = 1
   
 
 def showBoard(board):
@@ -92,8 +93,8 @@ def isGameOver(board):
 def movePiece(board, start, finish): # start and finish are [x, y] of piece to be moved
   if not isValid(board, start, finish):
     return False
-  board[finish[0], finish[1]] = board[start[0], start[1]]
-  board[start[0], start[1]] = 0
+  board[finish[0]][finish[1]] = board[start[0]][start[1]]
+  board[start[0]][start[1]] = 0
   return board
 
 
@@ -105,7 +106,7 @@ def isValidPos(cords): # cords is a list of [x, y]
   return cords[0]>-1 and cords[0] < 8 and cords[1]>-1 and cords[1]<8
 
 def isValidMove(board, piece, start, finish):
-  if piece != w5 and board[finish[0], finish[1]] == 0 and isObstruction(start, finish): # Check for obstructions
+  if piece != w5 and board[finish[0]][finish[1]] == 0 and isObstruction(start, finish): # Check for obstructions
     return False  
   elif start == finish:
     return False
@@ -147,6 +148,8 @@ def isValidMove(board, piece, start, finish):
       return True
     else:
       return False
+  else:
+    return False
 
 def isValidXMove(start, finish, distance=-1, obstructions=True): # Move along x-axis.
   if distance == -1:
@@ -201,5 +204,9 @@ def isObstruction(start, finish):
     
 def getBoard(): # Returns the board matrix
   global board # Gets the real board
+  try:# Check if board exists
+    assert(board)
+  except:
+    setVars()
   return board # Returns a copy
 
