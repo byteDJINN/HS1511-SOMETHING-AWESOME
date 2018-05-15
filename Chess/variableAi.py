@@ -10,6 +10,8 @@ def decideMove():
   checkSettings()
   if version == 0:
     start, finish = decideMove0()
+  if version == 1:
+    start, finish = decideMove1()
 
   return [start, finish] # start and finish are [x, y]
   
