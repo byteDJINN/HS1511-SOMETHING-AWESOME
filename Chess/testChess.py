@@ -1,1 +1,1 @@
-import chess # This file is secret so it is allowed to violate abstraction
+import chess # This file is just for testing so it is allowed to violate abstraction
