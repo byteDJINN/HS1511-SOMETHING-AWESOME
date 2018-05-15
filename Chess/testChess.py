@@ -1,4 +1,4 @@
-import chess as c# This file is just for testing so it is allowed to violate abstraction
+import chess as c # This file is just for testing so it is allowed to violate abstraction
 
 print("Checking setVars()")
 c.setVars()
@@ -18,3 +18,5 @@ if not (c.isValidMove(board, c.w6, [0, 7], [0, 6]) == True): # 1 Square move (pa
   print("isValidMove failed.")
 if not (c.isValidMove(board, c.w6, [0, 7], [0, 5]) == True): # 2 Square move (pawn)
   print("isValidMove failed.")
+
+print("All tests passed. You are AWESOME!!!")
