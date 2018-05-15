@@ -1,11 +1,10 @@
 # IMPORTS
 import userChess as u
+import random
 
 # FUNCTIONS
 
-def getRating():
-  # Produces a rating of the position of a board
-  return 0
+
   
 def decideMove():
   checkSettings()
@@ -25,8 +24,18 @@ def checkSettings():
   except:
     setMode(int(input("What AI Version: ")))
 
+# AI VERSION 0
 def decideMove0():
   start = list(map(int, input("Start: ").split())) # In format "x y"
   finish = list(map(int, input("Finish: ").split())) # In format "x y"
   return start, finish # start and finish are [x, y]
 
+# AI VERSION 1
+
+def decideMove1():
+  start = random.randint(0, 8)
+  finish = random.randint(0, 8)
+  while not u.isValid(start, finish):
+    start = random.randint(0, 8)
+    finish = random.randint(0, 8)
+  return start, finish
