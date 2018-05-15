@@ -33,7 +33,6 @@ def decideMove0():
   return start, finish # start and finish are [x, y]
 
 # AI VERSION 1
-
 def decideMove1():
   start = random.randint(0, 8)
   finish = random.randint(0, 8)
