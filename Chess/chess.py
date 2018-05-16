@@ -64,14 +64,14 @@ def setVars():
 
 def showBoard(board):
   for x in range(8):
-    print()
+    
     print(str(x),'|',end='')
     for y in range(8):
       if board[x][y] == 0:
         print("\u2001",end='')
       else:
         print(board[x][y],end='')
-  print()
+    print()
   print("  |",end="")
   for c in '01234567':
     print(c+"\u200A",end="") # Note: Close but not 100% accurate
@@ -86,72 +86,84 @@ def isGameOver(board):
         wKing = True
       elif square == b1:
         bKing = True
-  if not wKing and bKing:
+
+  if not (wKing and bKing):
     return [wKing, bKing]
   return False
 
 def movePiece(board, start, finish): # start and finish are [x, y] of piece to be moved
-  if not isValid(board, start, finish):
-    return False
   board[finish[0]][finish[1]] = board[start[0]][start[1]]
   board[start[0]][start[1]] = 0 # Reset square
   return board
 
-
 def isValid(board, start, finish):
-  return isValidPos(start) and isValidPos(finish) and isValidMove(board, board[start[0]][start[1]], start, finish)
+  return isValidPos(start) and isValidPos(finish) and isValidPiece(board, start) and isValidMove(board, start, finish)
 
+def isValidPiece(board, start):
+  p = board[start[0]][start[1]]
+  valid = False
+  if turnNumber % 2 == 1 and p in [w1, w2, w3, w4, w5]:
+    valid = True
+  elif turnNumber % 2 == 0 and p in [b1, b2, b3, b4, b5]:
+    valid = True
+  return valid
+    
 
 def isValidPos(cords): # cords is a list of [x, y]
   return cords[0]>-1 and cords[0] < 8 and cords[1]>-1 and cords[1]<8
 
-def isValidMove(board, piece, start, finish):
-  if piece != w5 and board[finish[0]][finish[1]] == 0 and isObstruction(start, finish): # Check for obstructions
-    return False  
-  elif start == finish:
-    return False
+def isValidMove(board, start, finish):
+  piece = board[start[0]][start[1]] # For ease of understanding
+  valid = None
+
+  if start == finish:
+    valid = False
   elif piece == w1 or piece == b1: # King
     if isValidXMove(start, finish, distance=1) or isValidYMove(start, finish, distance=1) or isValidZMove(start, finish, distance=1):
-      return True
+      valid = True
     else:
-      return False
+      valid = False
   elif piece == w2 or piece == b2: # Queen
     if isValidXMove(start, finish) or isValidYMove(start, finish) or isValidZMove(start, finish):
-      return True
+      valid = True
     else:
-      return False
+      valid = False
   elif piece == w3 or piece == b3: # Rook
     if isValidXMove(start, finish) or isValidYMove(start, finish):
-      return True
+      valid = True
     else:
-      return False
+      valid = False
   elif piece == w4 or piece == b4: # Bishop
     if isValidZMove(start, finish):
-      return True
+      valid = True
     else:
-      return False
+      valid = False
   elif piece == w5 or piece == b5: # Knight
     xDiff = abs(start[0]-finish[0])
     yDiff = abs(start[1]-finish[1])
     if xDiff == 1 and yDiff == 2:
-      return True
+      valid = True
     elif xDiff == 2 and yDiff == 1:
-      return True
+      valid = True
     else:
-      return False
+      valid = False
   elif piece == w6 or piece == b6: # Pawn
     if start[1] == 1 and isValidYMove(start, finish, 2, forceForward=True): # If it is the first time the piece is being moved
-      return True
+      valid = True
     elif isValidYMove(start, finish, 1, forceForward=True):
-      return True
-    elif isValidZMove(start, finish, distance=1, forceForward=True):
-      return True
+      valid = True
+    elif isValidZMove(start, finish, distance=1, forceForward=True) and board[finish[0]][finish[1]] != 0: # When the pawn is taking diagonally
+      valid = True
     else:
-      return False
+      valid = False
   else:
-    return False
+    valid = False
+  if valid and piece != w5 and piece != b5 and isObstruction(start, finish): # Check for obstructions
+    valid = False
+  return valid
 
-def isValidXMove(start, finish, distance=-1, obstructions=True): # Move along x-axis.
+
+def isValidXMove(start, finish, distance=-1): # Move along x-axis.
   if distance == -1:
     isValid = (abs(start[1] - finish[1]) == 0)
   else:
@@ -185,18 +197,18 @@ def isObstruction(start, finish):
   biggerY = max(start[1], finish[1])
   smallerY = min(start[1], finish[1])
   if biggerX == smallerX: # Same y-axis
-    for i in range(1, biggerY - smallerY):
+    for i in range(1, biggerY - smallerY+1):
       inBetween.append([biggerX, biggerY-i])
   elif biggerY == smallerY: # Same x-axis
-    for i in range(1, biggerX - smallerX):
+    for i in range(1, biggerX - smallerX+1):
       inBetween.append([biggerX-i, biggerY])
-  elif start[0] < finish[0] and start[1] < finish[1]: # The are a diagonal going upwards
-    for i in range(1, biggerX - smallerX):
+  elif start[0] < finish[0] and start[1] < finish[1]: # A diagonal going upwards
+    for i in range(1, biggerX - smallerX+1):
       inBetween.append([smallerX+i, smallerY+i])
-  elif start[0] > finish[0] and start[1] > finish[1]: # The are a diagonal going downwards
-    for i in range(1, biggerX - smallerX):
-      inBetween.append([smallerX+i, biggerY-i])
-  
+  elif start[0] > finish[0] and start[1] > finish[1]: # A diagonal going downwards
+    for i in range(1, biggerX - smallerX+1):
+      inBetween.append([smallerX-i, biggerY-i])
+  print(inBetween)
   for x, y in inBetween: # Check if pieces are on the squares
     if board[x][y] != 0:
       return True
@@ -204,7 +216,7 @@ def isObstruction(start, finish):
     
 def getBoard(): # Returns the board matrix
   global board # Gets the real board
-  try:# Check if board exists
+  try: # Check if board exists
     assert(board)
   except:
     setVars()
