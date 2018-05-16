@@ -18,8 +18,8 @@ printCheck(not c.isValidPos([8, 8]), 1) # Fence-post error check
 printCheck(not c.isValidPos([100298, 301847]), 2) # Normal error check
 
 print("\nChecking isValidMove(board, piece, start, finish)")
-printCheck(c.isValidMove(c.board, c.w6, [0, 7], [0, 6]), 1) # 1 Square move (pawn)
-printCheck(c.isValidMove(c.board, c.w6, [0, 7], [0, 5]), 2) # 2 Square move (pawn)
+printCheck(c.isValidMove(c.board, [0, 7], [0, 6]), 1) # 1 Square move (pawn)
+printCheck(c.isValidMove(c.board, [0, 7], [0, 5]), 2) # 2 Square move (pawn)
 
 print("\nChecking isObstruction(start, finish)")
 printCheck(c.isObstruction([0, 6], [0, 5]), 1)
