@@ -18,12 +18,13 @@ def getBoard():
 def isValid(board, start, finish):
   return c.isValid(board, start, finish)
   
-def movePiece(start, finish):
+def movePiece(board, start, finish):
   assert(sys.argv[0][len(sys.argv[0])-12::] == "\\runChess.py") # SECURITY
-  if c.movePiece(getBoard(), start, finish):
-    setBoard(c.movePiece(getBoard(), start, finish))
+  if isValid(board, start, finish):
+    setBoard(c.movePiece(board, start, finish))
   else:
     print("Invalid move!")
+  c.turnNumber += 1
 
 def getTurnNumber():
   return c.turnNumber
