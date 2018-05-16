@@ -65,7 +65,7 @@ def setVars():
 def showBoard(board):
   for x in range(8):
     print()
-    print(str(x+1),'|',end='')
+    print(str(x),'|',end='')
     for y in range(8):
       if board[x][y] == 0:
         print("\u2001",end='')
@@ -73,7 +73,7 @@ def showBoard(board):
         print(board[x][y],end='')
   print()
   print("  |",end="")
-  for c in 'abcdefgh':
+  for c in '01234567':
     print(c+"\u200A",end="") # Note: Close but not 100% accurate
   print()
 
@@ -184,10 +184,10 @@ def isObstruction(start, finish):
   smallerX = min(start[0], finish[0])
   biggerY = max(start[1], finish[1])
   smallerY = min(start[1], finish[1])
-  if biggerX == smallerX: # Same x-axis
+  if biggerX == smallerX: # Same y-axis
     for i in range(1, biggerY - smallerY):
       inBetween.append([biggerX, biggerY-i])
-  elif biggerY == smallerY: # Same y-axis
+  elif biggerY == smallerY: # Same x-axis
     for i in range(1, biggerX - smallerX):
       inBetween.append([biggerX-i, biggerY])
   elif start[0] < finish[0] and start[1] < finish[1]: # The are a diagonal going upwards
