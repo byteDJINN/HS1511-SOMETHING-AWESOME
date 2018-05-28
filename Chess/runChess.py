@@ -12,7 +12,8 @@ minSpeed = int(input("What is the minimum move delay [seconds]: "))
 u.showBoard(u.getBoard()) # Show board starting state
 while not u.isGameOver(u.getBoard()):
   print() # Create gap between turns
-  if u.getTurnNumber() % 2 == 1: # If it is an odd number
+  print("Turn %s" % u.getTurnNumber())
+  if u.getTurnNumber() % 2 == 0: # If it is an even number
     print("WHITE'S TURN")
     start, finish = ai1.decideMove()
     print(u.getBoard()[start[0]][start[1]],"was moved from",start,"to",finish)

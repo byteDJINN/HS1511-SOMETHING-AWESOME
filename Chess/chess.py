@@ -59,7 +59,7 @@ def setVars():
   
   # Create game information
   global turnNumber
-  turnNumber = 1
+  turnNumber = 0
   
 
 def showBoard(board):
@@ -102,15 +102,15 @@ def isValid(board, start, finish):
 def isValidPiece(board, start):
   p = board[start[0]][start[1]]
   valid = False
-  if turnNumber % 2 == 1 and p in [w1, w2, w3, w4, w5]:
+  if turnNumber % 2 == 0 and p in [w1, w2, w3, w4, w5, w6]:
     valid = True
-  elif turnNumber % 2 == 0 and p in [b1, b2, b3, b4, b5]:
+  elif turnNumber % 2 == 1 and p in [b1, b2, b3, b4, b5, w6]:
     valid = True
   return valid
     
 
 def isValidPos(cords): # cords is a list of [x, y]
-  return cords[0]>-1 and cords[0] < 8 and cords[1]>-1 and cords[1]<8
+  return (cords[0]>-1 and cords[0] < 8 and cords[1]>-1 and cords[1]<8)
 
 def isValidMove(board, start, finish):
   piece = board[start[0]][start[1]] # For ease of understanding
@@ -139,8 +139,8 @@ def isValidMove(board, start, finish):
     else:
       valid = False
   elif piece == w5 or piece == b5: # Knight
-    xDiff = abs(start[0]-finish[0])
-    yDiff = abs(start[1]-finish[1])
+    yDiff = abs(start[0]-finish[0])
+    xDiff = abs(start[1]-finish[1])
     if xDiff == 1 and yDiff == 2:
       valid = True
     elif xDiff == 2 and yDiff == 1:
@@ -148,7 +148,9 @@ def isValidMove(board, start, finish):
     else:
       valid = False
   elif piece == w6 or piece == b6: # Pawn
-    if start[1] == 1 and isValidYMove(start, finish, 2, forceForward=True): # If it is the first time the piece is being moved
+    if start[0] == 1 and (isValidYMove(start, finish, 2, forceForward=True) or isValidYMove(start, finish, 1, forceForward=True)): # White move
+      valid = True
+    elif start[0] == 6 and (isValidYMove(start, finish, 2, forceForward=True) or isValidYMove(start, finish, 1, forceForward=True)): # Black move
       valid = True
     elif isValidYMove(start, finish, 1, forceForward=True):
       valid = True
@@ -165,19 +167,19 @@ def isValidMove(board, start, finish):
 
 def isValidXMove(start, finish, distance=-1): # Move along x-axis.
   if distance == -1:
-    isValid = (abs(start[1] - finish[1]) == 0)
+    isValid = (abs(start[0] - finish[0]) == 0)
   else:
-    isValid = (abs(start[0] - finish[0]) == distance and abs(start[1] - finish[1]) == 0)
+    isValid = (abs(start[1] - finish[1]) == distance and abs(start[0] - finish[0]) == 0)
 
 def isValidYMove(start, finish, distance=-1, forceForward=False): # Move along y-axis
   if forceForward and distance != -1:
-    return (start[0] - finish[0] == 0 and start[1] - finish[1] == -distance) # Since pawns can only go forward
+    return (start[1] - finish[1] == 0 and abs(start[0] - finish[0]) == distance) 
   elif forceForward:
-    return (start[0] - finish[0] == 0 and start[1] - finish[1])
+    return (start[1] - finish[1] == 0)
   elif distance == -1:
-    return (abs(start[0] - finish[0]) == 0)
+    return (abs(start[1] - finish[1]) == 0)
   else:
-    return (abs(start[0] - finish[0]) == 0 and abs(start[1] - finish[1]) == distance)
+    return (abs(start[1] - finish[1]) == 0 and abs(start[0] - finish[0]) == distance)
 
 def isValidZMove(start, finish, distance=-1, forceForward=False): # Move along diagonal.
   if forceForward and distance != -1:
@@ -208,7 +210,7 @@ def isObstruction(start, finish):
   elif start[0] > finish[0] and start[1] > finish[1]: # A diagonal going downwards
     for i in range(1, biggerX - smallerX+1):
       inBetween.append([smallerX-i, biggerY-i])
-  print(inBetween)
+  del(inBetween[0])
   for x, y in inBetween: # Check if pieces are on the squares
     if board[x][y] != 0:
       return True
